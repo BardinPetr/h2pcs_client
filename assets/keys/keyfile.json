@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "smartgreenhouse-194905",
+  "private_key_id": "543c376b15cfcd92944cfaae09a06ee86fe3131d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCel+DbeqXua4sB\nWy7mPNtWthwbDBJ2KATo9wGTJGaKrhElAY0or1cqPWF5Kpx7hOtBRkAXiFZgvvaK\nKNLFK1UeUfArwGgz500iuAARttLYmaI2nC2L0jxJfnxkmnheQNp66Z0eB/QSrSlm\nN9EPjgJI33zAleqTk2729ePRE6/UMkhR/kACmKBBJry4RVCFxrSBaZrE6Fs5h+e/\ntehBa7HbiwDZ86BgheHdIvJHLEW5GQK4QcK00J+wIVFpa/vdzgLZ2W+iafZrx23w\ngIg0zEuy6061Eb08kwecaTacm4zKbNMei2sRIpjXgY0pC5KbwHVOMGUeKJ3dVHcg\nnIV1QOInAgMBAAECggEAKfw/VRuFLjdeV3+STPWzg6M2kZqCkLFLi3lI+3FZjEFE\n3K0qd6jjxJT3ZyJ2xuSLe35jnVdEttwXXMAt/HDaWeqLUKnhbExByX0413e1Hg6e\nOSLjk+6Wc0Z/HAsg7qLwtDWAmOC2JvOc0Cjauel4hV5VIo8NyP/xEoRKSaGSnPRA\nJoaulT4Oe3sDgiAAXyLxOMa2fAgyqG1MrT2GANEJMBJr8ZG+0nIOziXmIjM5cFF5\nwEafQgBisPZV1VUf27z0J+hCih8nMMFyKLsvgKUAHcymIXQ4od+7TqlWLXLsv0nx\nmVp56ui/nGeH7hKI3nBfHuLimAKRExpSaPu9LKex8QKBgQDOA4ZxivgHZjJxvyO5\ndqfyBbdlNAh1mP14YDJY9me7Eq0ZZhgvvT9Bunh0toWTA/WECctmzM7u8GS8TniK\npAdFHcMng7eu051P49A0FbCnEZQh+X8BAvrXW5Kjt1R0fp8UUgd9Qq02t93f3Ihv\npVqNRb/KiAk+efeBcZsAOP1eJQKBgQDFEthn+tlodzAnfDjlTZLY2yH5j5h47qeT\nIaDYS8R1Trr2xLgrbw8/A8Iu1KbhZjcWqX/HlFI+JDQOmmueils8yt2Ohnzn9BvK\nnzdN5buis0V4P1wregJ3ZXNgxqFGW7MOGlUT4jDh+Un2GyoeyYZBhLx7YYxHQPaY\nrZZWZadPWwKBgHkqR5tmIaSwbcDKq2c8K2DEDe4e4U7Q8VsoMNRz7+RuApLqohUJ\n2Dd/RbNXWk5ySKck35WRpa+QgZ7jBDB+cqwq6gnGhXT0jxRap6zKiQBp7VbiF9lv\neDrLZ/6UJ77wbf2UlUUNvzRshblRSolnlk96k2e6BL3THEfsmj5SRmplAoGBAJ6Z\nKfuUTz7ZHLHKMOeo5FMNF2yF+YjpV4b6+zzWzQYzFBff/O9Hc5ec6LtTe/HNluvw\nANuXLBDChfpyn8V5Ry/He0JmTUNGms8YDyPrjHPFnlTFeOGsUSvRQ2dQsx2yUok4\n+9sCn6BcRP+AoQch26ACuMT6njABwfLhUCm7qUgdAoGBAIOmteMoTc1EkNBY88GC\ngwEe6JkVK1mCusUj7P3uXOCAnzmsxYyy1aPF2STVVD5H7I6PdagY6J6q9riBgYu7\nEwgaBtUejCm5TohR7MtF6mffl7pAOokgfkBN33aZaIZJBbQAvga5ywWil6+GRZa+\nX7hCeG3XY8x3c7DE/YFV6Ttp\n-----END PRIVATE KEY-----\n",
+  "client_email": "smartgreen@smartgreenhouse-194905.iam.gserviceaccount.com",
+  "client_id": "118020056107976332963",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/smartgreen%40smartgreenhouse-194905.iam.gserviceaccount.com"
+}
