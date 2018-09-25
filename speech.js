@@ -151,16 +151,16 @@ module.exports = class {
                         if (params['time-type'] == 'at') {
                             tools.chedAt(...(res[1]), () => {
                                 processingerror(2)
-                                serial.setstate(se.ctrl[params['actuator-type']], 0)
+                                serial.SETSTATE(se.ctrl[params['actuator-type']], 0)
                             })
                         } else {
                             tools.chedAfter(...(res[1]), () => {
                                 processingerror(2)
-                                serial.setstate(se.ctrl[params['actuator-type']], 0)
+                                serial.SETSTATE(se.ctrl[params['actuator-type']], 0)
                             })
                         }
                     } else {
-                        serial.setstate(se.ctrl[params['actuator-type']], 0)
+                        serial.SETSTATE(se.ctrl[params['actuator-type']], 0)
                     }
                 } else if (action == 'turn-on') {
                     if (!params['actuator-type']) return processingerror()
@@ -168,38 +168,24 @@ module.exports = class {
                         if (params['time-type'] == 'at') {
                             tools.chedAt(...(res[1]), () => {
                                 processingerror(2)
-                                serial.setstate(se.ctrl[params['actuator-type']], 1)
+                                serial.SETSTATE(se.ctrl[params['actuator-type']], 1)
                             })
                         } else {
                             tools.chedAfter(...(res[1]), () => {
                                 processingerror(2)
-                                serial.setstate(se.ctrl[params['actuator-type']], 1)
+                                serial.SETSTATE(se.ctrl[params['actuator-type']], 1)
                             })
                         }
                     } else {
                         l.err(1, 1)
-                        serial.setstate(se.ctrl[params['actuator-type']], 1)
+                        serial.SETSTATE(se.ctrl[params['actuator-type']], 1)
                     }
                 } else if (action == 'mode.auto') {
-                    serial.setctrl(0)
+                    serial.SETCTRL(0)
                 } else if (action == 'mode.manual') {
-                    serial.setctrl(1)
+                    serial.SETCTRL(1)
                 } else if (action == 'social.take-photo') {
                     cb(0)
-                } else if (action == 'time.iterate') {
-                    if (!params['actuator-type'] || !params['state'] || !params['time']) return processingerror()
-                    tools.chedIter(...(res[1]), () => {
-                        processingerror(2)
-                        serial.setstate(se.ctrl[params['actuator-type']], se.ctrl[params['state']])
-                    })
-                    if (params['for']) {
-                        var h = tools.parseInt(params['for'].split(":")[0])
-                        var m = tools.parseInt(params['for'].split(":")[1])
-                        tools.chedIter(res[1][0] + h, res[1][0] + m, res[1], () => {
-                            processingerror(2)
-                            serial.setstate(se.ctrl[params['actuator-type']], se.ctrl[params['state']] == 1 ? 0 : 1)
-                        })
-                    }
                 } else if (action == 'main.finish') {
                     //speak.playfile(__dirname + 'assets/audio/mymindisgoing.mp3');
                 }

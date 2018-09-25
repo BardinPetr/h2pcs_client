@@ -13,13 +13,6 @@ bonjour.publish({
     port: 4132
 })
 
-
-var avrgirl = new Avrgirl({
-    board: 'uno',
-    port: process.argv[2] || process.argv[3]
-});
-
-
 var app = express();
 
 app.get('/flash/:hex', function (req, res) {
@@ -30,6 +23,10 @@ app.get('/flash/:hex', function (req, res) {
             res.send(err.toString());
             return console.log(err);
         }
+        var avrgirl = new Avrgirl({
+            board: 'uno',
+            port: process.argv[2] || process.argv[3]
+        });
         avrgirl.flash(path, function (error) {
             if (error) {
                 res.send(error.toString());

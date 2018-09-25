@@ -3,11 +3,10 @@ var colors = require('colors');
 var tools = require('./tools');
 var Protocol = require('./protocol');
 var util = require('util');
-const Gpio = require('orange-pi-gpio');
+var gpio = require('rpi-gpio')
+var gpiop = gpio.promise;
 
-let gpio = new Gpio({
-  pin: 5
-});
+gpio.setMode(gpio.MODE_BCM)
 
 var Stk500v1 = function (options) {
   options.protocol = STK;
@@ -67,19 +66,6 @@ Stk500v1.prototype._upload = function (file, callback) {
 Stk500v1.prototype._reset = function (callback) {
   var _this = this;
 
-  /*
-  _this.connection._setDTR(true, 250, function (error) {
-    if (!error) {
-      _this.debug('reset complete.');
-    }
-
-    return callback(error);
-  });
-  */
-  var gpio = require('rpi-gpio')
-  var gpiop = gpio.promise;
-
-  gpio.setMode(gpio.MODE_BCM)
   gpiop.setup(5, gpio.DIR_OUT)
     .then(() => {
       return gpiop.write(5, true)
@@ -89,8 +75,12 @@ Stk500v1.prototype._reset = function (callback) {
         return gpiop.write(5, false)
       }, 200)
     })
+    .then(() => {
+      return callback(null)
+    })
     .catch((err) => {
       console.log('Error: ', err.toString())
+      return callback(err)
     });
 
 };
