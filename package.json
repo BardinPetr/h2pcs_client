@@ -29,6 +29,7 @@
     "node-webcam": "^0.4.3",
     "nodegit": "^0.22.2",
     "polly-tts": "^1.0.4",
+    "rpi-gpio": "^1.0.0",
     "serialport": "^6.0.5",
     "sonus": "^0.1.9",
     "sudo": "^1.0.3",
