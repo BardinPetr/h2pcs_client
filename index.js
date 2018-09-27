@@ -54,20 +54,20 @@ const initialize = (guid) => {
 };
 
 if (cfg.get("uid") == -1) {
-    https.get('http://localhost:3971/create_guid', (resp) => {
-        let data = '';
-        resp.on('data', (chunk) => {
+    https.get("http://192.168.1.67:3971/create_guid", resp => {
+        let data = "";
+        resp.on("data", chunk => {
             data += chunk;
         });
-        resp.on('end', () => {
-            var d = JSON.parse(data)
+        resp.on("end", () => {
+            var d = JSON.parse(data);
             if (resp.statusCode == 200) {
-                cfg.set("uid", d)
-                l.ok("NGREENUID", d)
-                initialize(d)
+                cfg.set("uid", d);
+                l.ok("NGREENUID", d);
+                initialize(d);
             }
         });
-    })
+    });
 } else {
     l.ok("GREENUID", cfg.set("uid", d))
     initialize(cfg.set("uid", d))

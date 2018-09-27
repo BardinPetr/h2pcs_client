@@ -82,7 +82,6 @@ Stk500v1.prototype._reset = function (callback) {
       console.log('Error: ', err.toString())
       return callback(err)
     });
-
 };
 
 module.exports = Stk500v1;

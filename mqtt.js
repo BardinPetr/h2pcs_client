@@ -8,7 +8,7 @@ const mqtt = require('mqtt'),
 module.exports = class {
     constructor(guid, onrec) {
         this.guid = guid
-        this.client = mqtt.connect('mqtt://localhost:1889')
+        this.client = mqtt.connect('mqtt://192.168.1.67:1889')
         this.client.on('connect', function () {
             this.client.subscribe(`/sgh/${this.guid}/ctrl`)
             l.info("MQTT", "CONNECTED!")

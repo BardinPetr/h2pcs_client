@@ -17,6 +17,7 @@ bonjour.find({
             });
             resp.on('end', () => {
                 console.log(data);
+                process.exit()
             });
         }).on("error", (err) => {
             console.log("Error: " + err.message);
