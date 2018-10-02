@@ -5,7 +5,7 @@ var tweet_picture = require("./twitter.js").tweet,
     MQTT = require("./mqtt.js"),
     cfg = require("./config.js"),
     l = require("./logger.js"),
-    https = require('https'),
+    http = require('http'),
     fs = require("fs"),
     Speech = require('./speech.js')
 
@@ -15,19 +15,21 @@ var speech, mqtt;
 
 const initialize = (guid) => {
     var serial = new Serial(() => {
-        serial.guid = d
+        serial.guid = guid
 
         l.info("SERIAL", "CONNECTED!")
+        speech.setsghdata([1, 2, 3, 4, 5, 6])
 
         speech = new Speech(serial, id => {
             if (id == 0) tweet_picture()
         })
-        speech.setsghdata([1, 2, 3, 4, 5, 6])
         if (!DEBUG) setInterval(tweet_picture, 10 * 60 * 1000)
 
         l.info("SERIAL", "SGH STARTED")
 
-        var update_hours = serial.settime(new Date().getHours())
+        var update_hours = () => {
+            serial.SETTIME(new Date().getHours())
+        }
         setInterval(update_hours, 10 * 60 * 1000)
         update_hours();
 
@@ -35,7 +37,7 @@ const initialize = (guid) => {
             if (msg[0] == 'QQQ') {
                 return;
             } else {
-                serial.sendraw(p);
+                serial.sendraw(msg);
             }
         })
     }, () => {}, (cmd, data) => {
@@ -46,6 +48,8 @@ const initialize = (guid) => {
             serial.gdata[0] = data
             speech.setsghdata(data)
             mqtt.send("data", "SENS", ...data)
+        } else if (cmd == "MOTION") {
+            l.warn("MOTION!", "1")
         } else {
             l.log("SERIAL", cmd)
             l.log("SERIAL", data)
@@ -54,7 +58,7 @@ const initialize = (guid) => {
 };
 
 if (cfg.get("uid") == -1) {
-    https.get("http://192.168.1.67:3971/create_guid", resp => {
+    http.get("http://192.168.1.67:3971/create_guid", resp => {
         let data = "";
         resp.on("data", chunk => {
             data += chunk;
@@ -69,6 +73,5 @@ if (cfg.get("uid") == -1) {
         });
     });
 } else {
-    l.ok("GREENUID", cfg.set("uid", d))
-    initialize(cfg.set("uid", d))
+    initialize(cfg.get("uid"))
 }

@@ -10,10 +10,10 @@ module.exports = {
       host: ["192.168.1.44"],
       ssh_options: "StrictHostKeyChecking=no",
       ref: "origin/master",
-      repo: "git@bitbucket.org/BardinPetr/h2pcs-client",
-      path: "/home/petr/h2pcs-client",
-      pre-deploy-local: "echo 'Deploy started'",
-      post-deploy: "npm install",
+      repo: "https://bitbucket.org/BardinPetr/h2pcs-client",
+      path: "/home/pi/h2pcs-client",
+      "pre-deploy-local": "echo 'Deploy started'",
+      "post-deploy": "npm install",
     },
   }
 }

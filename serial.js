@@ -26,7 +26,7 @@ module.exports.Serial = class {
         this.parser.on('data', (data) => {
             data = pro.parse(data.toString())
             if (data[0]) {
-                if (data[0] == "STARTED" || this.nrsp) {
+                if (data[0] == "STARTED") {
                     scb();
                 } else if (data[0] == "STAT") {
                     this.gdata[0] = data[1]

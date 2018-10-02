@@ -2,7 +2,7 @@ const Configstore = require('configstore')
 const pkg = require('./package.json')
 const conf = new Configstore(pkg.name)
 
-if (!conf.has("uid") || true) {
+if (!conf.has("uid")) {
     conf.all = {
         release: false,
         uid: -1,
@@ -28,8 +28,7 @@ if (!conf.has("uid") || true) {
             pid: 'smartgreenhouse-194905'
         },
         snowboy: {
-            hotwords: [
-{
+            hotwords: [{
                 file: 'GH.pmdl',
                 hotword: 'GreenHouse'
             }]

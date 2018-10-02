@@ -8,17 +8,18 @@ const mqtt = require('mqtt'),
 module.exports = class {
     constructor(guid, onrec) {
         this.guid = guid
-        this.client = mqtt.connect('mqtt://192.168.1.67:1889')
-        this.client.on('connect', function () {
-            this.client.subscribe(`/sgh/${this.guid}/ctrl`)
+        //this.client = mqtt.connect('mqtt://192.168.1.67:1889')
+        var client = mqtt.connect('mqtt://localhost:1883')
+        client.on('connect', function () {
+            client.subscribe(`/sgh/${guid}/ctrl`)
             l.info("MQTT", "CONNECTED!")
         })
 
-        this.client.on('message', function (topic, message) {
-            message = pro.parse(message.toString())
+        client.on('message', function (topic, message) {
             l.warn("MQTT MSG", message)
-            onrec(topic, message, message.toString())
+            onrec(topic, message, pro.parse(message.toString()))
         })
+        this.client = client;
     }
 
     send() {

@@ -7,17 +7,15 @@ var cfg = require("./config.js"),
 
 var DEBUG = !cfg.get("release")
 
-var Webcam, twitterClient
-
-try {
-    Webcam = NodeWebcam.create({})
-    twitterClient = new Twitter(cfg.get("twitter"))
-} catch (e) {
-    l.err("WEBCAM", e)
-}
-
+var Webcam, twitterClient;
 
 module.exports.tweet = () => {
+    try {
+        Webcam = NodeWebcam.create({})
+        twitterClient = new Twitter(cfg.get("twitter"))
+    } catch (e) {
+        l.err("WEBCAM", e)
+    }
     Webcam.capture("cam.png", function (err, data) {
         if (err) {
             l.err("WEBCAM", err)
@@ -33,7 +31,7 @@ module.exports.tweet = () => {
                     l.ok("TWITTER_MEDIA", "UPLOAD FINISHED! " + media)
 
                     var status = {
-                        status: (DEBUG ? '!!! This post is from debug version !!!\n\n' : '') + 'See how my plants growing. (Posted by my SmartGreenHouse)',
+                        status: (DEBUG ? '!!! This post is from debug version !!!\n\n' : '') + 'See how my plants growing. (Posted by my H2Pcs)',
                         media_ids: media.media_id_string
                     }
 

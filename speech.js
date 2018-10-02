@@ -28,7 +28,8 @@ const hotwords = cfg.get("snowboy.hotwords").map((e) => {
 const sonus = Sonus.init({
     hotwords,
     language,
-    recordProgram: "rec"
+    recordProgram: "arecord",
+    device: 'hw:0,0'
 }, speech)
 
 var app = apiai(cfg.get("apiai_key"))
