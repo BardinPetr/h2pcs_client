@@ -32,6 +32,11 @@ if (!conf.has("uid")) {
                 file: 'GH.pmdl',
                 hotword: 'GreenHouse'
             }]
+        },
+        srv: {
+            debug: '127.0.0.1',
+            testing: '192.168.43.132',
+            release: 'bardin.petr.fvds.ru'
         }
     }
 }

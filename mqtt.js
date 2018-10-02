@@ -9,7 +9,7 @@ module.exports = class {
     constructor(guid, onrec) {
         this.guid = guid
         //this.client = mqtt.connect('mqtt://192.168.1.67:1889')
-        var client = mqtt.connect('mqtt://localhost:1883')
+        var client = mqtt.connect(`mqtt://${cfg.get('srv')[cfg.get('release') ? 'release' : 'debug']}:1883`)
         client.on('connect', function () {
             client.subscribe(`/sgh/${guid}/ctrl`)
             l.info("MQTT", "CONNECTED!")

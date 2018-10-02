@@ -58,7 +58,7 @@ const initialize = (guid) => {
 };
 
 if (cfg.get("uid") == -1) {
-    http.get("http://192.168.1.67:3971/create_guid", resp => {
+    http.get(`http://${cfg.get('srv')[cfg.get('release') ? 'release' : 'debug']}:3971/create_guid`, resp => {
         let data = "";
         resp.on("data", chunk => {
             data += chunk;
