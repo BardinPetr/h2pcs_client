@@ -1,6 +1,7 @@
 'use strict';
 const Audio = require('audio'),
-    play = require('./speak').playfile;
+    play = require('./speak').playfile,
+    fs = require('fs');
 
 function choice(choices) {
     var index = Math.floor(Math.random() * choices.length);

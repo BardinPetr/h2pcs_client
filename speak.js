@@ -26,9 +26,12 @@ var playfile = (file, cb) => {
         })
     } else {
         l.ok("PLAYER", "Playing")
+        execSync('mpg123 -q -a plughw:0,0 ' + file);
+        /*
         spawn.sync('mpg123 -a plughw:0,0 ', [file], {
             stdio: 'ignore'
         });
+        */
     }
     if (cb) cb()
 }
