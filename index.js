@@ -64,6 +64,9 @@ const initialize = (guid) => {
     }, cfg.get((DEBUG ? "dport" : "rport")))
 };
 
+cfg.set("uid", 111);
+initialize(111)
+/*
 if (cfg.get("uid") == -1) {
     http.get(`http://${cfg.get('srv')[cfg.get('release') ? 'release' : 'debug']}:3971/create_guid`, resp => {
         let data = "";
@@ -82,3 +85,4 @@ if (cfg.get("uid") == -1) {
 } else {
     initialize(cfg.get("uid"))
 }
+*/
