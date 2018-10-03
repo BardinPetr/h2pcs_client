@@ -26,7 +26,7 @@ var playfile = (file, cb) => {
         })
     } else {
         l.ok("PLAYER", "Playing")
-        spawn.sync('aplay --device=plughw:0,0 ', [file], {
+        spawn.sync('mpg123 -a plughw:0,0 ', [file], {
             stdio: 'ignore'
         });
     }
