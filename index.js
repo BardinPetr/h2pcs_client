@@ -20,11 +20,12 @@ const initialize = (guid) => {
         serial.guid = guid
 
         l.info("SERIAL", "CONNECTED!")
-        speech.setsghdata([1, 2, 3, 4, 5, 6])
 
         speech = new Speech(serial, id => {
             if (id == 0) tweet_picture()
         })
+        speech.setsghdata([1, 2, 3, 4, 5, 6])
+
         if (!DEBUG) setInterval(tweet_picture, 10 * 60 * 1000)
 
         l.info("SERIAL", "SGH STARTED")
