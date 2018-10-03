@@ -11,6 +11,7 @@
   "dependencies": {
     "@google-cloud/speech": "^0.10.3",
     "apiai": "^4.0.3",
+    "audio": "^1.2.0",
     "avrgirl-arduino": "^2.2.12",
     "better-queue": "^3.8.6",
     "bonjour": "^3.5.0",
@@ -23,17 +24,19 @@
     "express": "^4.16.3",
     "fs": "0.0.1-security",
     "jsonfile": "^4.0.0",
+    "languagedetect": "^1.1.1",
     "leven": "^2.1.0",
     "mqtt": "^2.15.2",
     "node-schedule": "^1.3.0",
     "node-webcam": "^0.4.3",
-    "nodegit": "^0.22.2",
     "polly-tts": "^1.0.4",
     "rpi-gpio": "^1.0.0",
     "serialport": "^6.0.5",
     "sonus": "^0.1.9",
     "sudo": "^1.0.3",
+    "translate": "^1.0.2",
     "twitter": "^1.7.1",
-    "unchain": "^1.0.0"
+    "unchain": "^1.0.0",
+    "xml2js": "^0.4.19"
   }
 }

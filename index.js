@@ -7,7 +7,9 @@ var tweet_picture = require("./twitter.js").tweet,
     l = require("./logger.js"),
     http = require('http'),
     fs = require("fs"),
-    Speech = require('./speech.js')
+    Speech = require('./speech.js'),
+    speak = require('./speak.js'),
+    music = require('./music.js');
 
 
 var DEBUG = !cfg.get("release")
@@ -50,6 +52,11 @@ const initialize = (guid) => {
             mqtt.send("data", "SENS", ...data)
         } else if (cmd == "MOTION") {
             l.warn("MOTION!", "1")
+            music.play(serial.gdata[0], () => {
+                setTimeout(() => {
+                    speak.say('Привет!')
+                }, 1000);
+            });
         } else {
             l.log("SERIAL", cmd)
             l.log("SERIAL", data)

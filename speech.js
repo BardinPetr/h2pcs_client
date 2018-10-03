@@ -11,7 +11,8 @@ let speak = require("./speak.js"),
     apiai = require('apiai'),
     se = require('./serial.js').enums,
     fs = require('fs'),
-    plants = require("./plants.js")
+    plants = require("./plants.js"),
+    chat = new(require("./chat.js"));
 
 
 const normTime = tools.normTime
@@ -54,6 +55,7 @@ module.exports.pbusy = false
 module.exports = class {
     constructor(serial, cb) {
         this.sens = undefined
+        this.last_chat = "";
         setbusy(false)
 
         l.log("SPEECH", "INIT STARTED")
@@ -82,6 +84,9 @@ module.exports = class {
             setbusy(true)
             res = normTime(res)
             l.log("SPEECH FINAL", res[0])
+            chat.send(res[0]).then(res => {
+                module.exports.last_chat = res;
+            }).catch(err => l.err('SPEECH', err))
             var request = app.textRequest(res[0], {
                 sessionId: 's4tix8d6i2'
             })
@@ -187,8 +192,10 @@ module.exports = class {
                     serial.SETCTRL(1)
                 } else if (action == 'social.take-photo') {
                     cb(0)
-                } else if (action == 'main.finish') {
-                    //speak.playfile(__dirname + 'assets/audio/mymindisgoing.mp3');
+                } else if (action == 'input.unknown') {
+                    speak.say(module.exports.last_chat);
+                    setbusy(false)
+                    return;
                 }
                 speak.say(fspeech)
                 setbusy(false)
