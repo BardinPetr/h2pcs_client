@@ -13,9 +13,9 @@ module.exports.play = (d, cb) => {
     var a_err = fs.readdirSync('./songs1');
     var song = null;
     if (d[0] > 60 && 20 <= d[1] <= 25 && 50 <= d[2] <= 95 && d[3] > 2000) {
-        song = choice(a_ok);
+        song = './songs/'+ choice(a_ok);
     } else {
-        song = choice(a_err);
+        song = './songs1/' + choice(a_err);
     }
     play(song, cb)
 }
