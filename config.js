@@ -36,7 +36,7 @@ if (!conf.has("uid")) {
         srv: {
             debug: '127.0.0.1',
             testing: '192.168.43.132',
-            release: 'bardin.petr.fvds.ru'
+            release: '212.109.194.80'
         }
     }
 }
