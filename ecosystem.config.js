@@ -7,12 +7,12 @@ module.exports = {
   ],
   deploy: {
     production: {
-      key: "$HOME/.ssh",
+      key: "$HOME/.ssh/id_rsa",
       user: "pi",
       host: ["192.168.43.129"],
       ssh_options: "StrictHostKeyChecking=no",
       ref: "origin/master",
-      repo: "https://bitbucket.org/BardinPetr/h2pcs-client",
+      repo: "git@github.com:BardinPetr/h2pcs_client.git",
       path: "/home/pi/h2pcs-client",
       "pre-deploy-local": "echo 'Deploy started'",
       "post-deploy":
