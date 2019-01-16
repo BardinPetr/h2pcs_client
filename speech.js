@@ -29,7 +29,7 @@ const hotwords = cfg.get("snowboy.hotwords").map((e) => {
 const sonus = Sonus.init({
     hotwords,
     language,
-    recordProgram: "arecord",
+    recordProgram: "rec",
     device: 'hw:0,0'
 }, speech)
 
