@@ -53,6 +53,7 @@ const initialize = (guid) => {
             mqtt.send("data", "SENS", ...data)
         } else if (cmd == "MOTION") {
             l.warn("MOTION!", "1")
+            return;
             music.play(serial.gdata[0], () => {
                 setTimeout(() => {
                     speak.say('Привет!')
