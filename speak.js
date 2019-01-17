@@ -111,12 +111,14 @@ module.exports.QSpeaker = class {
   start(cb) {
     this.cb = cb;
     l.ok("QSPEAKER", "Fetching started");
-    if (conf.has("greed") && conf.get("greed") == '1'){
+    if (conf.has("greed")){
       for (var e = 0; e < length; e++) {
         var i = this.xq[e];
         this.fetch(i);
       }
     } else {
+      l.ok("NOGREED", this.xq.join(''));
+      this.tcnt = 1;
       this.fetch(this.xq.join(''))
     }
   }
