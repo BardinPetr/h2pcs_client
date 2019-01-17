@@ -15,6 +15,8 @@ let fs = require("fs"),
 
 var options = conf.get("polly");
 let polly = new Polly(options);
+const Lame = require("node-lame").Lame;
+var encoder;
 
 var playfile = (file, cb) => {
   if (!file) return;
@@ -26,12 +28,25 @@ var playfile = (file, cb) => {
     });
   } else {
     l.ok("PLAYER", "Playing");
-    execSync("lame --scale 10 -V 0 " + file + " play.mp3", [], { stdio: "ignore" });
-    execSync("mpg123 play.mp3", [], {
-      stdio: "ignore"
-    });
+    execSync("lame --scale 10 -V 0 " + file + " ", [], { stdio: "ignore" });
+    encoder = new Lame({
+      output: file,
+      scale: 10,
+      "vbr-quality": 0,
+      bitrate: 192
+    }).setFile("play.mp3");
+    encoder
+        .encode()
+        .then(() => {
+          execSync("mpg123 play.mp3", [], {
+            stdio: "ignore"
+          });
+          if (cb) cb();
+        })
+        .catch(error => {
+          if (cb) cb();
+        });
   }
-  if (cb) cb();
 };
 var ding = () => playfile(ROOT_DIR + "assets/audio/ding.mp3");
 ding();
