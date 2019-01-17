@@ -26,7 +26,7 @@ var playfile = (file, cb) => {
     });
   } else {
     l.ok("PLAYER", "Playing");
-    execSync("lame --scale 10 " + file + " play.mp3", [], { stdio: "ignore" });
+    execSync("lame --scale 10 -V 0 " + file + " play.mp3", [], { stdio: "ignore" });
     execSync("mpg123 play.mp3", [], {
       stdio: "ignore"
     });
@@ -44,7 +44,11 @@ module.exports.say = (text, cb) => {
   if (!fs.existsSync(filePath)) {
     let fileStream = fs.createWriteStream(filePath);
     options.text = text;
+    console.log(options)
     polly.textToSpeech(options, (err, audioStream) => {
+      if(err){
+	module.exports.say('Есть проблемы с синтезом речи', ()=>{});
+      }
       audioStream.pipe(fileStream);
       audioStream.on("end", () => {
         playfile(filePath, cb);
@@ -62,6 +66,9 @@ module.exports.fetch = (text, cb) => {
     let fileStream = fs.createWriteStream(filePath);
     options.text = text;
     polly.textToSpeech(options, (err, audioStream) => {
+      if(err){
+        module.exports.say(' ^u ^a ^b ^l    ^`           ^k  ^a  ^a     ^b          ^`   ^g  ', ()=>{});
+      }
       audioStream.pipe(fileStream);
       audioStream.on("end", () => {
         if (cb) cb();
@@ -144,8 +151,11 @@ module.exports.QSpeaker = class {
       let fileStream = fs.createWriteStream(filePath);
       options.text = text;
       polly.textToSpeech(options, (err, audioStream) => {
-        audioStream.pipe(fileStream);
-        audioStream.on("end", () => {
+      if(err){
+        module.exports.say(' ^u ^a ^b ^l    ^`           ^k  ^a  ^a     ^b          ^`   ^g  ', ()=>{});
+      }
+      audioStream.pipe(fileStream);
+      audioStream.on("end", () => {
           this.onfinish();
         });
       });

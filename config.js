@@ -18,7 +18,7 @@ if (!conf.has("uid")) {
             accessKeyId: "AKIAJEUIZ5A2Y2M5HGWA",
             secretAccessKey: "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",
             textType: "text",
-            region: "eu-west-2",
+            region: "us-east-2",
             voiceId: "Tatyana",
             sampleRate: 22050,
             outputFormat: "mp3"
