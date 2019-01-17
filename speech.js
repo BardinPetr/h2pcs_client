@@ -88,7 +88,7 @@ module.exports = class {
                 module.exports.last_chat = res;
             }).catch(err => l.err('SPEECH', err))
             var request = app.textRequest(res[0], {
-                sessionId: 's4tix8d6i2'
+                sessionId: 'srh53q3442'
             })
             request.on('response', function (response) {
                 setbusy(true)
