@@ -117,9 +117,10 @@ module.exports.QSpeaker = class {
         this.fetch(i);
       }
     } else {
-      l.ok("NOGREED", this.xq.join(''));
       this.tcnt = 1;
-      this.fetch(this.xq.join(''))
+      this.xq = [this.xq.join(' ')];
+      l.ok("NOGREED", this.xq[0]);
+      this.fetch(this.xq[0])
     }
   }
 
