@@ -28,18 +28,17 @@ var playfile = (file, cb) => {
     });
   } else {
     l.ok("PLAYER", "Playing");
-    var tmpf = ROOT_DIR + "/tmp.mp3";
+    var tmpf = ROOT_DIR + "tmp.mp3";
     encoder = new Lame({
-      output: file,
+      output: tmpf,
       scale: 10,
       "vbr-quality": 0,
       bitrate: 192
-    }).setFile(tmpf);
-    execSync("mv", [tmpf, file], { stdio: "ignore" });
+    }).setFile(file);
     encoder
       .encode()
       .then(() => {
-        execSync("mpg123", [file], {
+        execSync("mpg123 " + tmpf, [], {
           stdio: "ignore"
         });
         if (cb) cb();
