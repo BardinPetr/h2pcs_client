@@ -1,3 +1,4 @@
+var child_process = require('child_process');
 var Avrgirl = require('avrgirl-arduino');
 var bonjour = require('bonjour')();
 var express = require('express');
@@ -16,11 +17,13 @@ bonjour.publish({
 var app = express();
 
 app.get('/flash/:hex', function (req, res) {
+    child_process.spawn('pm2 stop H2Pcs', []);
     var code = Buffer.from(req.params.hex, 'base64').toString('utf-8');
     var path = 'tempOTA.hex';
     fs.writeFile(path, code, function (err) {
         if (err) {
             res.send(err.toString());
+            child_process.spawn('pm2 start H2Pcs', []);
             return console.log(err);
         }
         var avrgirl = new Avrgirl({
@@ -36,6 +39,7 @@ app.get('/flash/:hex', function (req, res) {
                 console.info('done.');
             }
             fs.unlink(path);
+            child_process.spawn('pm2 start H2Pcs', []);
         });
     });
 });
