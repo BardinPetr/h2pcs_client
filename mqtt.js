@@ -23,6 +23,6 @@ module.exports = class {
 
     send() {
         var args = Array.prototype.slice.call(arguments, 0);
-        this.client.publish(`/sgh/${guid}/${args[0]}`, pro.create(...(args.slice(1))))
+        this.client.publish(`/sgh/${this.guid}/${args[0]}`, pro.create(...(args.slice(1))))
     }
 }
