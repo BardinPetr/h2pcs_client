@@ -1,5 +1,6 @@
 var tweet_picture = require("./twitter.js").tweet,
     Serial = require("./serial.js").Serial,
+    Webcam = require("./webcam").Webcam,
     enums = require("./serial.js").enums,
     pro = require("./protocol.js"),
     MQTT = require("./mqtt.js"),
@@ -13,28 +14,13 @@ var tweet_picture = require("./twitter.js").tweet,
 
 
 var DEBUG = !cfg.get("release")
-var speech, mqtt;
+var speech, mqtt, webcam;
 
 const initialize = (guid) => {
     var serial = new Serial(() => {
         serial.guid = guid
 
         l.info("SERIAL", "CONNECTED!")
-
-        speech = new Speech(serial, id => {
-            if (id == 0) tweet_picture()
-        })
-        speech.setsghdata([1, 2, 3, 4, 5, 6])
-
-        if (!DEBUG) setInterval(tweet_picture, 10 * 60 * 1000)
-
-        l.info("SERIAL", "SGH STARTED")
-
-        var update_hours = () => {
-            serial.SETTIME(new Date().getHours())
-        }
-        setInterval(update_hours, 10 * 60 * 1000)
-        update_hours();
 
         mqtt = new MQTT(guid, (topic, msg, p) => {
             if (msg[0] == 'QQQ') {
@@ -43,6 +29,27 @@ const initialize = (guid) => {
                 serial.sendraw(msg);
             }
         })
+
+        webcam = new Webcam(() => {
+            tweet_picture();
+        }, (data) => {
+            mqtt.send_image(data);
+        });
+
+        speech = new Speech(serial, id => {
+            if (id == 0) webcam.capture()
+        })
+        speech.setsghdata([1, 2, 3, 4, 5, 6])
+
+        if (!DEBUG) setInterval(() => webcam.capture(), 10 * 60 * 1000)
+
+        l.info("SERIAL", "SGH STARTED")
+
+        var update_hours = () => {
+            serial.SETTIME(new Date().getHours())
+        }
+        setInterval(update_hours, 10 * 60 * 1000)
+        update_hours();
     }, () => {}, (cmd, data) => {
         if (cmd == "STAT") {
             serial.gdata[1] = data

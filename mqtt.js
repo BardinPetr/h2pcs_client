@@ -25,4 +25,12 @@ module.exports = class {
         var args = Array.prototype.slice.call(arguments, 0);
         this.client.publish(`/sgh/${this.guid}/${args[0]}`, pro.create(...(args.slice(1))))
     }
+
+    send_image(data) {
+        try {
+            this.client.publish(`/sgh/${this.guid}/cam`, data)
+        } catch (ex) {
+            l.err("MQTT_SI", ex);
+        }
+    }
 }
