@@ -30,24 +30,18 @@ const initialize = (guid) => {
             }
         })
 
-        webcam = new Webcam(() => {
-            tweet_picture();
-        }, (data) => {
-            mqtt.send_image(data);
-        });
+        webcam = new Webcam(tweet_picture, mqtt.send_image);
 
         speech = new Speech(serial, id => {
             if (id == 0) webcam.capture()
         })
         speech.setsghdata([1, 2, 3, 4, 5, 6])
 
-        if (!DEBUG) setInterval(() => webcam.capture(), 10 * 60 * 1000)
+        if (!DEBUG) setInterval(webcam.capture, 10 * 60 * 1000)
 
         l.info("SERIAL", "SGH STARTED")
 
-        var update_hours = () => {
-            serial.SETTIME(new Date().getHours())
-        }
+        var update_hours = () => serial.SETTIME(new Date().getHours());
         setInterval(update_hours, 10 * 60 * 1000)
         update_hours();
     }, () => {}, (cmd, data) => {
@@ -75,6 +69,7 @@ const initialize = (guid) => {
 
 cfg.set("uid", 111);
 initialize(111)
+
 /*
 if (cfg.get("uid") == -1) {
     http.get(`http://${cfg.get('srv')[cfg.get('release') ? 'release' : 'debug']}:3971/create_guid`, resp => {
