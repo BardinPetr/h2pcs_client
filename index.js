@@ -30,7 +30,10 @@ const initialize = (guid) => {
             }
         })
 
-        webcam = new Webcam(tweet_picture, mqtt.send_image);
+        webcam = new Webcam((data) => {
+            tweet_picture();
+            mqtt.send_image(data)
+        });
 
         speech = new Speech(serial, id => {
             if (id == 0) webcam.capture()

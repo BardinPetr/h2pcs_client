@@ -6,15 +6,12 @@ var cfg = require("./config.js"),
 var DEBUG = !cfg.get("release")
 
 module.exports.Webcam = class {
-    constructor(cb, cb2) {
+    constructor(cb) {
         this.cb = cb;
-        this.cb2 = cb2;
     }
 
     capture() {
-        var Webcam,
-            cb = this.cb,
-            cb2 = this.cb2;
+        var Webcam;
         try {
             Webcam = NodeWebcam.create({})
         } catch (e) {
@@ -23,14 +20,6 @@ module.exports.Webcam = class {
         }
         Webcam.capture("cam.png", {
             callbackReturn: "base64"
-        }, function (err, data) {
-            if (err) {
-                l.err("WEBCAM", err)
-                return;
-            }
-            l.ok("WEBCAM", "CAPTURED")
-            cb()
-            setTimeout(cb2, 300)
-        })
+        }, this.cb)
     }
 }
