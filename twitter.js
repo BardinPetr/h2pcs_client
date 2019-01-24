@@ -9,6 +9,7 @@ var DEBUG = !cfg.get("release")
 var twitterClient;
 
 module.exports.tweet = () => {
+    return;
     try {
         twitterClient = new Twitter(cfg.get("twitter"))
     } catch (e) {

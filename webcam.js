@@ -5,8 +5,6 @@ var cfg = require("./config.js"),
 
 var DEBUG = !cfg.get("release")
 
-var Webcam;
-
 module.exports.Webcam = class {
     constructor(cb, cb2) {
         this.cb = cb;
@@ -14,29 +12,25 @@ module.exports.Webcam = class {
     }
 
     capture() {
+        var Webcam,
+            cb = this.cb,
+            cb2 = this.cb2;
         try {
             Webcam = NodeWebcam.create({})
         } catch (e) {
             l.err("WEBCAM", e)
             return;
         }
-        Webcam.capture("cam.png", function (err, data) {
+        Webcam.capture("cam.png", {
+            callbackReturn: "base64"
+        }, function (err, data) {
             if (err) {
                 l.err("WEBCAM", err)
                 return;
             }
             l.ok("WEBCAM", "CAPTURED")
-            this.cb()
-            Webcam.capture("cam.png", {
-                callbackReturn: "base64"
-            }, function (err, data) {
-                if (err) {
-                    l.err("WEBCAM", err)
-                    return;
-                }
-                l.ok("WEBCAM", "CAPTURED FOR BASE64")
-                this.cb2(data)
-            })
+            cb()
+            setTimeout(cb2, 300)
         })
     }
 }
