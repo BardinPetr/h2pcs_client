@@ -1,7 +1,6 @@
 var tweet_picture = require("./twitter.js").tweet,
     Serial = require("./serial.js").Serial,
-    Webcam = require("./webcam").Webcam,
-    enums = require("./serial.js").enums,
+    NodeWebcam = require("node-webcam"),
     pro = require("./protocol.js"),
     MQTT = require("./mqtt.js"),
     cfg = require("./config.js"),
@@ -14,7 +13,9 @@ var tweet_picture = require("./twitter.js").tweet,
 
 
 var DEBUG = !cfg.get("release")
-var speech, mqtt, webcam;
+var speech, mqtt;
+
+
 
 const initialize = (guid) => {
     var serial = new Serial(() => {
@@ -30,17 +31,34 @@ const initialize = (guid) => {
             }
         })
 
-        webcam = new Webcam((data) => {
-            tweet_picture();
-            mqtt.send_image(data)
-        });
+        const capture = () => {
+            try {
+                var Webcam = NodeWebcam.create({})
+                Webcam.capture("cam.png", {
+                    callbackReturn: "base64"
+                }, function (err, data) {
+                    if (err) {
+                        l.err("WEBCAM", err);
+                        return;
+                    }
+                    l.ok("WEBCAM", "Sending a picture")
+                    tweet_picture();
+                    mqtt.send_image(data)
+                })
+            } catch (e) {
+                l.err("WEBCAM", e)
+                return;
+            }
+        }
 
         speech = new Speech(serial, id => {
-            if (id == 0) webcam.capture()
+            if (id == 0) capture()
         })
         speech.setsghdata([1, 2, 3, 4, 5, 6])
 
-        if (!DEBUG) setInterval(webcam.capture, 10 * 60 * 1000)
+        if (!DEBUG) setInterval(() => {
+            capture();
+        }, 4000)
 
         l.info("SERIAL", "SGH STARTED")
 
