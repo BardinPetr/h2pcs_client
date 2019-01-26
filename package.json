@@ -13,6 +13,7 @@
     "apiai": "^4.0.3",
     "audio": "^1.2.0",
     "avrgirl-arduino": "^2.2.12",
+    "axios": "^0.18.0",
     "better-queue": "^3.8.6",
     "bonjour": "^3.5.0",
     "chalk": "^2.3.1",
@@ -38,6 +39,7 @@
     "translate": "^1.0.2",
     "twitter": "^1.7.1",
     "unchain": "^1.0.0",
-    "xml2js": "^0.4.19"
+    "xml2js": "^0.4.19",
+    "yandex-speech": "0.0.14"
   }
 }

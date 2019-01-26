@@ -5,17 +5,30 @@ var tweet_picture = require("./twitter.js").tweet,
     MQTT = require("./mqtt.js"),
     cfg = require("./config.js"),
     l = require("./logger.js"),
+    axios = require('axios'),
     http = require('http'),
     fs = require("fs"),
     Speech = require('./speech.js'),
     speak = require('./speak.js'),
     music = require('./music.js');
 
-
 var DEBUG = !cfg.get("release")
 var speech, mqtt;
 
+speak.playfile(__dirname + "/assets/audio/sstart.mp3");
 
+const send_image = (guid, pic) => {
+    axios.post(`http://${cfg.get('srv')[cfg.get('release') ? 'release' : 'debug']}:3971/image`, {
+            guid: guid,
+            pic: pic
+        })
+        .then((res) => {
+            l.info("PICSEND", `Result ${res.statusCode}`)
+        })
+        .catch((error) => {
+            l.err("PICSEND", error)
+        })
+}
 
 const initialize = (guid) => {
     var serial = new Serial(() => {
@@ -33,17 +46,16 @@ const initialize = (guid) => {
 
         const capture = () => {
             try {
-                var Webcam = NodeWebcam.create({})
-                Webcam.capture("cam.png", {
+                var cam = NodeWebcam.capture("cam.png", {
                     callbackReturn: "base64"
                 }, function (err, data) {
                     if (err) {
                         l.err("WEBCAM", err);
                         return;
                     }
-                    l.ok("WEBCAM", "Sending a picture")
+                    l.ok("WEBCAM", "Sending a picture");
                     tweet_picture();
-                    mqtt.send_image(data)
+                    send_image(guid, data);
                 })
             } catch (e) {
                 l.err("WEBCAM", e)
@@ -90,6 +102,7 @@ const initialize = (guid) => {
 
 cfg.set("uid", 111);
 initialize(111)
+
 
 /*
 if (cfg.get("uid") == -1) {
