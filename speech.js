@@ -30,7 +30,7 @@ const sonus = Sonus.init({
     hotwords,
     language,
     recordProgram: "rec",
-    device: 'hw:0,0'
+    device: 'hw:2,0'
 }, speech)
 
 var app = apiai(cfg.get("apiai_key"))
@@ -64,11 +64,11 @@ module.exports = class {
         sonus.on('hotword', (index, keyword) => {
             if (!module.exports.busy) {
                 setbusy(true)
-                setTimeout(() => {
-                    if (!module.exports.pbusy)
-                        setbusy(false)
-                }, 5000)
-                speak.ding()
+                // setTimeout(() => {
+                //     if (!module.exports.pbusy)
+                //         setbusy(false)
+                // }, 5000)
+                speak.playfile(ROOT_DIR + "assets/audio/start.mp3")
                 l.ok("SPEECH", "!" + keyword)
             }
         })
@@ -84,6 +84,9 @@ module.exports = class {
             setbusy(true)
             res = normTime(res)
             l.log("SPEECH FINAL", res[0])
+            if (res[0].trim() == "") {
+                processingerror();
+            }
             // chat.send(res[0]).then(res => {
             //     module.exports.last_chat = res;
             // }).catch(err => l.err('SPEECH', err))

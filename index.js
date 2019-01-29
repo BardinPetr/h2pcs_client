@@ -17,6 +17,8 @@ var speech, mqtt;
 
 speak.playfile(__dirname + "/assets/audio/sstart.mp3");
 
+const millis = () => new Date().getTime();
+
 const send_image = (guid, pic) => {
     axios.post(`http://${cfg.get('srv')[cfg.get('release') ? 'release' : 'debug']}:3971/image`, {
             guid: guid,
@@ -54,7 +56,6 @@ const initialize = (guid) => {
                         return;
                     }
                     l.ok("WEBCAM", "Sending a picture");
-                    tweet_picture();
                     send_image(guid, data);
                 })
             } catch (e) {
@@ -68,9 +69,8 @@ const initialize = (guid) => {
         })
         speech.setsghdata([1, 2, 3, 4, 5, 6])
 
-        if (!DEBUG) setInterval(() => {
-            capture();
-        }, 4000)
+        setInterval(() => capture(), 4000)
+        if (!DEBUG) setInterval(() => tweet_picture(), 10 * 60 * 1000);
 
         l.info("SERIAL", "SGH STARTED")
 

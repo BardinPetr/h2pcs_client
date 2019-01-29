@@ -9,7 +9,7 @@ var DEBUG = !cfg.get("release")
 var twitterClient;
 
 module.exports.tweet = () => {
-    return;
+    if (require('fs').existsSync(__dirname + "/.notweet")) return;
     try {
         twitterClient = new Twitter(cfg.get("twitter"))
     } catch (e) {

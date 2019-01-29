@@ -48,7 +48,7 @@ var playfile = (file, cb) => {
       });
   }
 };
-var ding = () => playfile(ROOT_DIR + "assets/audio/start.mp3");
+var ding = () => playfile(ROOT_DIR + "assets/audio/ding.mp3");
 
 module.exports.playfile = playfile;
 module.exports.ding = ding;
