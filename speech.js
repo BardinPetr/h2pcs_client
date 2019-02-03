@@ -33,6 +33,18 @@ const sonus = Sonus.init({
     device: 'hw:2,0'
 }, speech)
 
+const GoogleAssistant = require('googleassistant');
+const deviceCredentials = require('./devicecredentials.json');
+
+const CREDENTIALS = {
+    client_id: deviceCredentials.client_id,
+    client_secret: deviceCredentials.client_secret,
+    refresh_token: deviceCredentials.refresh_token,
+    type: "authorized_user"
+};
+
+const assistant = new GoogleAssistant(CREDENTIALS);
+
 var app = apiai(cfg.get("apiai_key"))
 
 var processingerror = id => {
@@ -90,6 +102,15 @@ module.exports = class {
             // chat.send(res[0]).then(res => {
             //     module.exports.last_chat = res;
             // }).catch(err => l.err('SPEECH', err))
+
+            module.exports.last_chat = undefined;
+            assistant.assist(res[0])
+                .then(({
+                    text
+                }) => {
+                    module.exports.last_chat = text;
+                });
+
             var request = app.textRequest(res[0], {
                 sessionId: 'srh53q3442'
             })
@@ -196,9 +217,10 @@ module.exports = class {
                 } else if (action == 'social.take-photo') {
                     cb(0)
                 } else if (action == 'input.unknown') {
-                    // speak.say(module.exports.last_chat);
-                    // setbusy(false)
-                    // return;
+                    while (!module.exports.last_chat);
+                    speak.say(module.exports.last_chat);
+                    setbusy(false)
+                    return;
                 }
                 speak.say(fspeech)
                 setbusy(false)
