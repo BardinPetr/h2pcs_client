@@ -33,7 +33,7 @@ const sonus = Sonus.init({
     device: 'hw:2,0'
 }, speech)
 
-const GoogleAssistant = require('googleassistant');
+const GoogleAssistant = require('./googleassistant');
 const deviceCredentials = require('./devicecredentials.json');
 
 const CREDENTIALS = {
