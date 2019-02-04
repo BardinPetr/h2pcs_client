@@ -104,12 +104,6 @@ module.exports = class {
             // }).catch(err => l.err('SPEECH', err))
 
             module.exports.last_chat = undefined;
-            assistant.assist(res[0])
-                .then(({
-                    text
-                }) => {
-                    module.exports.last_chat = text;
-                });
 
             var request = app.textRequest(res[0], {
                 sessionId: 'srh53q3442'
@@ -217,9 +211,16 @@ module.exports = class {
                 } else if (action == 'social.take-photo') {
                     cb(0)
                 } else if (action == 'input.unknown') {
-                    while (!module.exports.last_chat);
-                    speak.say(module.exports.last_chat);
-                    setbusy(false)
+                    assistant.assist(res[0])
+                        .then(data => {
+                            console.log("[G.ASSIST] ", data)
+                            speak.say(data.text);
+                            setbusy(false)
+                            return;
+                        })
+                        .catch(err => {
+                            l.err("G.ASSIST", err)
+                        });
                     return;
                 }
                 speak.say(fspeech)
