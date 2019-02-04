@@ -17,13 +17,13 @@ bonjour.publish({
 var app = express();
 
 app.get('/flash/:hex', function (req, res) {
-    child_process.spawn('pm2 stop H2Pcs', []);
+    child_process.spawn('pm2 stop all', []);
     var code = Buffer.from(req.params.hex, 'base64').toString('utf-8');
     var path = 'tempOTA.hex';
     fs.writeFile(path, code, function (err) {
         if (err) {
             res.send(err.toString());
-            child_process.spawn('pm2 start H2Pcs', []);
+            child_process.spawn('pm2 start all', []);
             return console.log(err);
         }
         var avrgirl = new Avrgirl({
@@ -39,7 +39,7 @@ app.get('/flash/:hex', function (req, res) {
                 console.info('done.');
             }
             fs.unlink(path);
-            child_process.spawn('pm2 start H2Pcs', []);
+            child_process.spawn('pm2 start all', []);
         });
     });
 });

@@ -11,9 +11,8 @@ let speak = require("./speak.js"),
     apiai = require('apiai'),
     se = require('./serial.js').enums,
     fs = require('fs'),
-    plants = require("./plants.js")
-// chat = new(require("./chat.js"));
-
+    plants = require("./plants.js"),
+    child_process = require('child_process');
 
 const normTime = tools.normTime
 const speech = require('@google-cloud/speech')({
@@ -74,12 +73,14 @@ module.exports = class {
         Sonus.start(sonus)
 
         sonus.on('hotword', (index, keyword) => {
-            if (!module.exports.busy) {
+            if (keyword === 'restart') {
+                child_process.spawn('pm2 restart all', []);
+            } else if (!module.exports.busy) {
                 setbusy(true)
-                // setTimeout(() => {
-                //     if (!module.exports.pbusy)
-                //         setbusy(false)
-                // }, 5000)
+                setTimeout(() => {
+                    if (!module.exports.pbusy)
+                        setbusy(false)
+                }, 7000)
                 speak.playfile(ROOT_DIR + "assets/audio/start.mp3")
                 l.ok("SPEECH", "!" + keyword)
             }
