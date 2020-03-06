@@ -35,8 +35,7 @@ if (!conf.has("uid")) {
         },
         srv: {
             debug: '127.0.0.1',
-            testing: '192.168.43.132',
-            release: '212.109.194.80'
+            release: 'https://api.h2pcs.xyz'
         }
     }
 }

@@ -20,7 +20,7 @@ speak.playfile(__dirname + "/assets/audio/sstart.mp3");
 const millis = () => new Date().getTime();
 
 const send_image = (guid, pic) => {
-    axios.post(`http://${cfg.get('srv')[cfg.get('release') ? 'release' : 'debug']}:3971/image`, {
+    axios.post(`${cfg.get('srv')[cfg.get('release') ? 'release' : 'debug']}/image`, {
             guid: guid,
             pic: pic
         })
